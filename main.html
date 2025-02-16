@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdoPro</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-links">
+                <!-- Navigation will be populated by JavaScript -->
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 id="welcome-message">Welcome to EdoPro</h1>
+        <div id="content">
+            <!-- Content will be populated based on selected language -->
+        </div>
+    </div>
+    
+    <script type="module">
+        // Check if language is selected
+        const language = sessionStorage.getItem('edoproLanguage');
+        if (!language) {
+            window.location.href = 'index.html';
+        }
+
+        // Update content based on language
+        const welcomeMessage = document.getElementById('welcome-message');
+        const content = document.getElementById('content');
+
+        const translations = {
+            fr: {
+                welcome: "Bienvenue sur EdoPro",
+                content: "Contenu en français"
+            },
+            en: {
+                welcome: "Welcome to EdoPro",
+                content: "Content in English"
+            },
+            pt: {
+                welcome: "Bem-vindo ao EdoPro",
+                content: "Conteúdo em Português"
+            },
+            ro: {
+                welcome: "Bun venit la EdoPro",
+                content: "Conținut în Română"
+            },
+            pl: {
+                welcome: "Witamy w EdoPro",
+                content: "Treść po polsku"
+            }
+        };
+
+        // Update the content
+        welcomeMessage.textContent = translations[language].welcome;
+        content.textContent = translations[language].content;
+    </script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>

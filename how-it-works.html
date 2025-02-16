@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdoPro - How it Works</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/how-it-works.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-links">
+                <!-- Navigation will be populated by JavaScript -->
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div id="how-it-works-content" class="how-it-works-container">
+            <!-- Content will be populated based on selected language -->
+        </div>
+    </div>
+
+    <script type="module">
+        import { howItWorksContent } from './js/translations/how-it-works.js';
+
+        // Check if language is selected
+        const language = sessionStorage.getItem('edoproLanguage');
+        if (!language) {
+            window.location.href = 'index.html';
+        }
+
+        // Update content based on language
+        const content = document.getElementById('how-it-works-content');
+        const howItWorks = howItWorksContent[language];
+
+        content.innerHTML = `
+            <h1>${howItWorks.title}</h1>
+            
+            <div class="section">
+                <p class="section-content">${howItWorks.process}</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">${howItWorks.whyAudio.title}</h2>
+                <p class="section-content">${howItWorks.whyAudio.content}</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">${howItWorks.whyNoCall.title}</h2>
+                <p class="section-content">${howItWorks.whyNoCall.content}</p>
+            </div>
+
+            <div class="section">
+                <div class="highlight">
+                    <p>${howItWorks.registration}</p>
+                </div>
+                
+                <div class="important-note">
+                    <p>${howItWorks.waitResponse}</p>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">${howItWorks.services.title}</h2>
+                
+                <div class="service-item">
+                    <h3>📞 ${howItWorks.services.calls}</h3>
+                </div>
+                
+                <div class="service-item">
+                    <h3>📋 ${howItWorks.services.quotes}</h3>
+                </div>
+                
+                <div class="service-item">
+                    <h3>✍️ ${howItWorks.services.secretariat}</h3>
+                </div>
+                
+                <div class="service-item">
+                    <h3>🌐 ${howItWorks.services.translations}</h3>
+                </div>
+                
+                <div class="service-item">
+                    <h3>📜 ${howItWorks.services.compliance}</h3>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">WhatsApp</h2>
+                <p class="section-content">${howItWorks.audioInstructions}</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Credits</h2>
+                <p class="section-content">${howItWorks.credits}</p>
+            </div>
+        `;
+    </script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>

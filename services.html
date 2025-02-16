@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdoPro - Services</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/services.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-links">
+                <!-- Navigation will be populated by JavaScript -->
+             </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div id="services-content">
+            <!-- Content will be populated based on selected language -->
+        </div>
+    </div>
+
+    <script type="module">
+        import { servicesContent } from './js/translations/services.js';
+
+        // Check if language is selected
+        const language = sessionStorage.getItem('edoproLanguage');
+        if (!language) {
+            window.location.href = 'index.html';
+            // Exit early to prevent trying to access undefined content
+            throw new Error('No language selected');
+        }
+
+        // Update content based on language
+        const content = document.getElementById('services-content');
+        const services = servicesContent[language];
+
+        // Verify that we have content for the selected language
+        if (!services) {
+            console.error('No content found for language:', language);
+            window.location.href = 'index.html';
+            throw new Error('Invalid language selected');
+        }
+
+        content.innerHTML = `
+            <h1>${services.title}</h1>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="${services.phone.image}" alt="${services.phone.title}">
+                    <h3>${services.phone.title}</h3>
+                    <p>${services.phone.content}</p>
+                </div>
+                
+                <div class="service-card">
+                    <img src="${services.quotes.image}" alt="${services.quotes.title}">
+                    <h3>${services.quotes.title}</h3>
+                    <p>${services.quotes.content}</p>
+                    <div class="example-box">
+                        <h4>${services.quotes.example.title}</h4>
+                        ${services.quotes.example.items.map(item => `<p>${item}</p>`).join('')}
+                    </div>
+                    <p>${services.quotes.experience}</p>
+                </div>
+                
+                <div class="service-card">
+                    <img src="${services.secretariat.image}" alt="${services.secretariat.title}">
+                    <h3>${services.secretariat.title}</h3>
+                    <ul class="service-list">
+                        ${services.secretariat.items.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="service-card">
+                    <img src="${services.translation.image}" alt="${services.translation.title}">
+                    <h3>${services.translation.title}</h3>
+                    <p>${services.translation.content}</p>
+                </div>
+                
+                <div class="service-card">
+                    <img src="${services.support.image}" alt="${services.support.title}">
+                    <h3>${services.support.title}</h3>
+                    <p>${services.support.content}</p>
+                </div>
+            </div>
+        `;
+    </script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>

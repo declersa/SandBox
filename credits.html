@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdoPro - Credits</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/credits.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-links">
+                <!-- Navigation will be populated by JavaScript -->
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div id="credits-content">
+            <!-- Content will be populated based on selected language -->
+        </div>
+    </div>
+
+    <script type="module">
+        // Check if language is selected
+        const language = sessionStorage.getItem('edoproLanguage');
+        if (!language) {
+            window.location.href = 'index.html';
+            throw new Error('No language selected');
+        }
+
+        const creditsContent = {
+            fr: {
+                title: "Mes crédits",
+                subscription: "ABONNEMENT MENSUEL",
+                hours: "heures",
+                hour: "heure",
+                buy: "Acheter",
+                credits: [
+                    {
+                        type: "subscription",
+                        hours: 4,
+                        price: 120,
+                        priceId: 'price_H5ggYwtDq4fbrJ'
+                    },
+                    {
+                        hours: 1,
+                        price: 39,
+                        priceId: 'price_H5ggYwtDq4fbrK'
+                    },
+                    {
+                        hours: 5,
+                        price: 195,
+                        priceId: 'price_H5ggYwtDq4fbrL'
+                    },
+                    {
+                        hours: 7,
+                        price: 273,
+                        priceId: 'price_H5ggYwtDq4fbrM'
+                    }
+                ]
+            },
+            pl: {
+                title: "Moje kredyty",
+                subscription: "MIESIĘCZNA SUBSKRYPCJA",
+                hours: "godzin",
+                hour: "godzina",
+                buy: "Kup",
+                credits: [
+                    {
+                        type: "subscription",
+                        hours: 4,
+                        price: 120,
+                        priceId: 'price_H5ggYwtDq4fbrJ'
+                    },
+                    {
+                        hours: 1,
+                        price: 39,
+                        priceId: 'price_H5ggYwtDq4fbrK'
+                    },
+                    {
+                        hours: 5,
+                        price: 195,
+                        priceId: 'price_H5ggYwtDq4fbrL'
+                    },
+                    {
+                        hours: 7,
+                        price: 273,
+                        priceId: 'price_H5ggYwtDq4fbrM'
+                    }
+                ]
+            },
+            ro: {
+                title: "Creditele mele",
+                subscription: "ABONAMENT LUNAR",
+                hours: "ore",
+                hour: "oră",
+                buy: "Cumpără",
+                credits: [
+                    {
+                        type: "subscription",
+                        hours: 4,
+                        price: 120,
+                        priceId: 'price_H5ggYwtDq4fbrJ'
+                    },
+                    {
+                        hours: 1,
+                        price: 39,
+                        priceId: 'price_H5ggYwtDq4fbrK'
+                    },
+                    {
+                        hours: 5,
+                        price: 195,
+                        priceId: 'price_H5ggYwtDq4fbrL'
+                    },
+                    {
+                        hours: 7,
+                        price: 273,
+                        priceId: 'price_H5ggYwtDq4fbrM'
+                    }
+                ]
+            },
+            pt: {
+                title: "Meus créditos",
+                subscription: "ASSINATURA MENSAL",
+                hours: "horas",
+                hour: "hora",
+                buy: "Comprar",
+                credits: [
+                    {
+                        type: "subscription",
+                        hours: 4,
+                        price: 120,
+                        priceId: 'price_H5ggYwtDq4fbrJ'
+                    },
+                    {
+                        hours: 1,
+                        price: 39,
+                        priceId: 'price_H5ggYwtDq4fbrK'
+                    },
+                    {
+                        hours: 5,
+                        price: 195,
+                        priceId: 'price_H5ggYwtDq4fbrL'
+                    },
+                    {
+                        hours: 7,
+                        price: 273,
+                        priceId: 'price_H5ggYwtDq4fbrM'
+                    }
+                ]
+            },
+            bg: {
+                title: "Моите кредити",
+                subscription: "МЕСЕЧЕН АБОНАМЕНТ",
+                hours: "часа",
+                hour: "час",
+                buy: "Купи",
+                credits: [
+                    {
+                        type: "subscription",
+                        hours: 4,
+                        price: 120,
+                        priceId: 'price_H5ggYwtDq4fbrJ'
+                    },
+                    {
+                        hours: 1,
+                        price: 39,
+                        priceId: 'price_H5ggYwtDq4fbrK'
+                    },
+                    {
+                        hours: 5,
+                        price: 195,
+                        priceId: 'price_H5ggYwtDq4fbrL'
+                    },
+                    {
+                        hours: 7,
+                        price: 273,
+                        priceId: 'price_H5ggYwtDq4fbrM'
+                    }
+                ]
+            }
+        };
+
+        // Update content based on language
+        const content = document.getElementById('credits-content');
+        const credits = creditsContent[language];
+
+        if (!credits) {
+            console.error('No content found for language:', language);
+            window.location.href = 'index.html';
+            throw new Error('Invalid language selected');
+        }
+
+        const renderCreditCard = (credit) => {
+            const isSubscription = credit.type === 'subscription';
+            return `
+                <div class="credit-card ${isSubscription ? 'subscription' : ''}">
+                    ${isSubscription ? `<h2>${credits.subscription}</h2>` : `<h2>Crédit</h2>`}
+                    <div class="hours">
+                        <span class="number">${credit.hours}</span>
+                        <span class="label">${credit.hours === 1 ? credits.hour : credits.hours}</span>
+                    </div>
+                    <div class="price">${credit.price}€</div>
+                    <button class="buy-button" data-price-id="${credit.priceId}">${credits.buy}</button>
+                </div>
+            `;
+        };
+
+        content.innerHTML = `
+            <h1>${credits.title}</h1>
+            <div class="credits-grid">
+                ${credits.credits.map(renderCreditCard).join('')}
+            </div>
+        `;
+
+        // Initialize Stripe
+        const stripe = Stripe('pk_test_your_publishable_key'); // Remplacer par votre clé publique Stripe
+
+        // Add click handlers to all buy buttons
+        document.querySelectorAll('.buy-button').forEach(button => {
+            button.addEventListener('click', async (e) => {
+                const priceId = e.target.dataset.priceId;
+                
+                try {
+                    // Create Stripe Checkout Session
+                    const response = await fetch('https://api.your-backend.com/create-checkout-session', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            priceId: priceId,
+                            successUrl: window.location.origin + '/success.html',
+                            cancelUrl: window.location.origin + '/credits.html',
+                        }),
+                    });
+
+                    const session = await response.json();
+
+                    // Redirect to Stripe Checkout
+                    const result = await stripe.redirectToCheckout({
+                        sessionId: session.id,
+                    });
+
+                    if (result.error) {
+                        alert(result.error.message);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Une erreur est survenue. Veuillez réessayer.');
+                }
+            });
+        });
+    </script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>

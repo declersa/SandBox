@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdoPro - Contact</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/contact.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-links">
+                <!-- Navigation will be populated by JavaScript -->
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div id="contact-content">
+            <!-- Content will be populated based on selected language -->
+        </div>
+    </div>
+
+    <script type="module">
+        import { contactContent } from './js/translations/contact.js';
+
+        // Check if language is selected
+        const language = sessionStorage.getItem('edoproLanguage');
+        if (!language) {
+            window.location.href = 'index.html';
+        }
+
+        // Update content based on language
+        const content = document.getElementById('contact-content');
+        const contact = contactContent[language];
+
+        content.innerHTML = `
+            <h1>${contact.title}</h1>
+            
+            <p class="intro-text">
+                ${contact.intro} 
+                <a href="https://wa.me/1234567890" class="whatsapp-link" target="_blank">${contact.whatsapp}</a>.
+            </p>
+
+            <form class="contact-form">
+                <div class="form-group">
+                    <label for="name">${contact.form.name}</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="firstName">${contact.form.firstName}</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="nativeLang">${contact.form.nativeLang}</label>
+                    <input type="text" id="nativeLang" name="nativeLang" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">${contact.form.company}</label>
+                    <input type="text" id="company" name="company">
+                </div>
+
+                <div class="form-group">
+                    <label for="vat">${contact.form.vat}</label>
+                    <input type="text" id="vat" name="vat">
+                </div>
+
+                <div class="form-group services-group">
+                    <p class="services-title">${contact.form.services.title}</p>
+                    
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="services" value="calls">
+                        ${contact.form.services.calls}
+                    </label>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="services" value="letters">
+                        ${contact.form.services.letters}
+                    </label>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="services" value="invoices">
+                        ${contact.form.services.invoices}
+                    </label>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="services" value="forms">
+                        ${contact.form.services.forms}
+                    </label>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="services" value="quotes">
+                        ${contact.form.services.quotes}
+                    </label>
+
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="services" value="quotesCalc">
+                        ${contact.form.services.quotesCalc}
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-button">${contact.form.submit}</button>
+            </form>
+        `;
+
+        // Handle form submission
+        const form = document.querySelector('.contact-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Add form submission logic here
+            console.log('Form submitted');
+        });
+    </script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
